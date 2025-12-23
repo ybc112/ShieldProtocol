@@ -1,0 +1,38 @@
+{
+  "name": "@shield-protocol/contracts",
+  "version": "1.0.0",
+  "description": "Shield Protocol Smart Contracts - Asset Protection & Automation Platform",
+  "license": "MIT",
+  "author": "Shield Protocol Team",
+  "scripts": {
+    "build": "forge build",
+    "test": "forge test",
+    "test:verbose": "forge test -vvv",
+    "test:gas": "forge test --gas-report",
+    "coverage": "forge coverage",
+    "format": "forge fmt",
+    "lint": "solhint 'src/**/*.sol'",
+    "deploy:sepolia": "forge script script/Deploy.s.sol:DeployShieldProtocol --rpc-url $SEPOLIA_RPC_URL --broadcast --verify",
+    "deploy:local": "forge script script/Deploy.s.sol:DeployShieldProtocol --rpc-url http://localhost:8545 --broadcast",
+    "verify": "forge verify-contract",
+    "clean": "forge clean"
+  },
+  "devDependencies": {
+    "solhint": "^4.0.0"
+  },
+  "keywords": [
+    "ethereum",
+    "solidity",
+    "smart-contracts",
+    "defi",
+    "erc-7715",
+    "eip-7702",
+    "dca",
+    "automation",
+    "metamask"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shield-protocol/contracts.git"
+  }
+}

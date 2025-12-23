@@ -1,0 +1,23 @@
+{
+  "name": "shield-protocol-indexer",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npx ponder dev",
+    "start": "npx ponder start",
+    "codegen": "npx ponder codegen",
+    "serve": "npx ponder serve"
+  },
+  "dependencies": {
+    "ponder": "^0.15.17",
+    "viem": "^2.21.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.0",
+    "@types/node": "^20.0.0"
+  },
+  "engines": {
+    "node": ">=18.14"
+  }
+}

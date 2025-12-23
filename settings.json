@@ -1,0 +1,8 @@
+{
+  "env": {
+    "ANTHROPIC_AUTH_TOKEN": "sk-ue2DyXGyQdAZOxrf9d9NLdjhc217OKcFirVsJ3qPhM1iJ1AJ",
+    "ANTHROPIC_BASE_URL": "https://anyrouter.top",
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+    "DISABLE_TELEMETRY": "1"
+  }
+}
