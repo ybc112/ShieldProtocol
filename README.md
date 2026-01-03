@@ -786,6 +786,74 @@ Traditional DeFi Problems          →  Shield Solutions
 
 ---
 
+## Advanced Permissions Usage
+
+Shield Protocol is built natively on MetaMask's ERC-7715 Advanced Permissions standard. Here's how we implement permission request and redemption:
+
+### Requesting Advanced Permissions
+
+Users grant fine-grained, time-limited permissions through our Shield activation and strategy creation flows:
+
+- **Shield Activation (Spending Limits)**: [`web/src/hooks/useShield.ts`](web/src/hooks/useShield.ts) - `useActivateShield()` hook requests permission to enforce daily and per-transaction spending limits
+- **DCA Strategy Creation**: [`web/src/hooks/useStrategy.ts`](web/src/hooks/useStrategy.ts) - `useCreateStrategy()` hook requests recurring spending permissions for automated DCA execution
+- **Rebalance Strategy**: [`web/src/hooks/useRebalance.ts`](web/src/hooks/useRebalance.ts) - Requests multi-token spending permissions for portfolio rebalancing
+- **Stop-Loss Strategy**: [`web/src/hooks/useStopLoss.ts`](web/src/hooks/useStopLoss.ts) - Requests conditional execution permissions for stop-loss triggers
+- **Subscription Creation**: [`web/src/hooks/useSubscription.ts`](web/src/hooks/useSubscription.ts) - Requests recurring payment permissions
+
+### Redeeming Advanced Permissions
+
+Backend executor services redeem granted permissions to execute automated strategies:
+
+- **DCA Executor**: [`backend/src/services/dcaExecutor.ts`](backend/src/services/dcaExecutor.ts) - Redeems permissions to execute scheduled DCA swaps within user-defined limits
+- **Rebalance Executor**: [`backend/src/services/rebalanceExecutor.ts`](backend/src/services/rebalanceExecutor.ts) - Redeems permissions to rebalance portfolios when thresholds are met
+- **Stop-Loss Executor**: [`backend/src/services/stopLossExecutor.ts`](backend/src/services/stopLossExecutor.ts) - Redeems permissions to execute stop-loss orders when price conditions trigger
+- **Subscription Executor**: [`backend/src/services/subscriptionExecutor.ts`](backend/src/services/subscriptionExecutor.ts) - Redeems permissions to process recurring subscription payments
+
+### Smart Contract Permission Enforcement
+
+- **ShieldCore Contract**: [`contracts/src/core/ShieldCore.sol`](contracts/src/core/ShieldCore.sol) - Enforces spending limits and whitelist restrictions
+- **DCAExecutor Contract**: [`contracts/src/executors/DCAExecutor.sol`](contracts/src/executors/DCAExecutor.sol) - Validates and executes DCA strategies within permission bounds
+
+---
+
+## Envio Usage
+
+Shield Protocol uses **Ponder** (Envio-compatible indexer) for real-time blockchain event indexing, powering our analytics dashboard and strategy monitoring.
+
+### How We Use Envio/Ponder
+
+1. **Real-time Event Indexing**: Index all Shield Protocol contract events for instant dashboard updates
+2. **Strategy Tracking**: Track DCA executions, rebalance operations, and stop-loss triggers
+3. **User Analytics**: Aggregate user spending, investment totals, and strategy performance
+4. **Global Statistics**: Calculate protocol-wide metrics (total users, volume, executions)
+
+### Code Links
+
+- **Indexer Configuration**: [`indexer/ponder.config.ts`](indexer/ponder.config.ts) - Defines indexed contracts and chain configuration
+- **Database Schema**: [`indexer/ponder.schema.ts`](indexer/ponder.schema.ts) - Defines all indexed entities (users, shields, strategies, executions, etc.)
+- **ShieldCore Event Handlers**: [`indexer/src/ShieldCore.ts`](indexer/src/ShieldCore.ts) - Handles shield activation, config updates, emergency mode, spending records
+- **DCA Event Handlers**: [`indexer/src/DCAExecutor.ts`](indexer/src/DCAExecutor.ts) - Handles strategy creation, execution, pause/resume/cancel events
+- **Rebalance Event Handlers**: [`indexer/src/RebalanceExecutor.ts`](indexer/src/RebalanceExecutor.ts) - Handles rebalance strategy events
+- **Stop-Loss Event Handlers**: [`indexer/src/StopLossExecutor.ts`](indexer/src/StopLossExecutor.ts) - Handles stop-loss strategy events
+- **Subscription Event Handlers**: [`indexer/src/SubscriptionManager.ts`](indexer/src/SubscriptionManager.ts) - Handles subscription and payment events
+- **GraphQL API**: [`indexer/src/api/index.ts`](indexer/src/api/index.ts) - Custom API endpoints for frontend queries
+
+### Indexed Data
+
+| Entity | Description |
+|--------|-------------|
+| `user` | User profiles with aggregated stats |
+| `shield` | Shield configurations and spending limits |
+| `dcaStrategy` | DCA strategy details and execution stats |
+| `dcaExecution` | Individual DCA execution records |
+| `rebalanceStrategy` | Rebalance strategy configurations |
+| `stopLossStrategy` | Stop-loss strategy configurations |
+| `subscription` | Subscription details and payment history |
+| `activityLog` | User activity timeline |
+| `globalStats` | Protocol-wide statistics |
+
+---
+
 ## Team
 
 Building at MetaMask Advanced Permissions Hackathon 2024
